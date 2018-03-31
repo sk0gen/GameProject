@@ -9,11 +9,12 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Audio.hpp"
 #include <Box2D/Box2D.h>
+//#include "GameObjects/Rectangle/Rectangle.h" // Tutaj jest problem. Gdy nie includuje tego pliku wszystko smiga, tylko jest to potrzebne :D.
 #include <string>
 #include <vector>
 #include <memory>
 
-
+class Rectangle;
 
 class Game {
 public:
@@ -35,6 +36,7 @@ private:
 
 
 };
+
 
 
 #endif //PROJEKTGRAC_GAME_H
