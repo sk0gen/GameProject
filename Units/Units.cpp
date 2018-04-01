@@ -5,7 +5,7 @@
 #include "Units.h"
 
 int Units::MetersToPixels(float meters) {
-    return (int)((meters*50));
+    return (int)((meters*50)+0.5);
 }
 
 float Units::PixelsToMeters(int pixels) {

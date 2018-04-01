@@ -10,6 +10,7 @@ int main() {
 
     auto THEGAME = new Game;
     THEGAME->LoadTexture("../IMG/Player.png");
+    THEGAME->LoadTexture("../IMG/Box.png");
     THEGAME->LoadTexture("../IMG/ground.png");
 
 

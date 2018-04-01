@@ -6,7 +6,7 @@
 #include "Units/Units.h"
 
 Rectangle::Rectangle(const sf::Texture &texture, int width,
-                     int height, int x, int y,
+                     int height, float x, float y,
                      b2World *World,
                      b2BodyType bodyType) {
     this->Texture = texture;
@@ -18,7 +18,8 @@ Rectangle::Rectangle(const sf::Texture &texture, int width,
     bodyDef.position = b2Vec2(
             Units::PixelsToMeters(x), Units::PixelsToMeters(y));
     bodyDef.type =bodyType;
-    body = someWorld->CreateBody(&bodyDef);
+    this->World = World;
+    body = this->World->CreateBody(&bodyDef);
     b2PolygonShape Shape;
     Shape.SetAsBox((Units::PixelsToMeters(width-1)/2.f),
                    (Units::PixelsToMeters(height-1)/2.f));
@@ -31,6 +32,7 @@ Rectangle::Rectangle(const sf::Texture &texture, int width,
 
 void Rectangle::Rendering(Game *game) {
     sf::Sprite Sprite;
+    Texture.setSmooth(true);
     Sprite.setTexture(Texture);
     Sprite.setOrigin(width/2.f,height/2.f);
     x=Units::MetersToPixels(body->GetPosition().x);

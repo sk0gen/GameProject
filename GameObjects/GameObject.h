@@ -5,7 +5,9 @@
 #ifndef PROJEKTGRAC_GAMEOBJECT_H
 #define PROJEKTGRAC_GAMEOBJECT_H
 #pragma once
-#include "../Game/Game.h"
+
+
+class Game;
 
 class GameObject {
 public:
@@ -13,8 +15,10 @@ public:
     int y;
 
     virtual void Rendering(Game *game)=0;
-    virtual void Delete_Body()=0;
+
 
 };
+
+#include "../Game/Game.h"
 
 #endif //PROJEKTGRAC_GAMEOBJECT_H
