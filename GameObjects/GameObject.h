@@ -16,6 +16,7 @@ public:
 
     virtual void Rendering(Game *game)=0;
 
+    virtual void Kill()=0;
 
 };
 

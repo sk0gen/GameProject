@@ -1,36 +1,39 @@
 //
-// Created by sk0gen on 27/03/2018.
+// Created by sk0gen on 01/04/2018.
 //
 
-#include "Rectangle.h"
+#include "Player.h"
 #include "Units/Units.h"
 
-Rectangle::Rectangle(const sf::Texture &texture, int width,
-                     int height, float x, float y,
-                     b2World *World,
-                     b2BodyType bodyType) {
+
+Player::Player(const sf::Texture &texture, int width,
+               int height, float x, float y,
+               b2World *World,
+               b2BodyType bodyType) {
     this->Texture = texture;
     this->width = width;
-    this->height=height;
+    this->height = height;
     this->x = x;
     this->y = y;
     b2BodyDef bodyDef;
     bodyDef.position = b2Vec2(
             Units::PixelsToMeters(x), Units::PixelsToMeters(y));
-    bodyDef.type =bodyType;
+    bodyDef.type = bodyType;
+    bodyDef.fixedRotation = true;
     this->World = World;
     body = this->World->CreateBody(&bodyDef);
+
     b2PolygonShape Shape;
-    Shape.SetAsBox((Units::PixelsToMeters(width-1)/2.f),
-                   (Units::PixelsToMeters(height-1)/2.f));
+    Shape.SetAsBox((Units::PixelsToMeters(width - 1) / 2.f),
+                   (Units::PixelsToMeters(height - 1) / 2.f));
     b2FixtureDef fixtureDef;
     fixtureDef.density = 1.f;
-    fixtureDef.friction =0.60f;
-    fixtureDef.shape =&Shape;
+    fixtureDef.friction = 0.20f;
+    fixtureDef.shape = &Shape;
     body->CreateFixture(&fixtureDef);
 }
 
-void Rectangle::Rendering(Game *game) {
+void Player::Rendering(Game *game) {
     sf::Sprite Sprite;
     Texture.setSmooth(true);
     Sprite.setTexture(Texture);
@@ -43,6 +46,6 @@ void Rectangle::Rendering(Game *game) {
 
 }
 
-void Rectangle::Kill() {
-body->GetWorld()->DestroyBody(body);
+void Player::Kill() {
+    body->GetWorld()->DestroyBody(body);
 }

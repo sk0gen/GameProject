@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Game/Game.h"
 #include "GameObjects/Rectangle/Rectangle.h"
+
 int main() {
 
     auto THEGAME = new Game;
@@ -13,9 +14,8 @@ int main() {
     THEGAME->LoadTexture("../IMG/Box.png");
     THEGAME->LoadTexture("../IMG/ground.png");
 
-
     THEGAME->run();
-
+    delete THEGAME;
     return 0;
 }
 

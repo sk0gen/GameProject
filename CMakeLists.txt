@@ -9,6 +9,7 @@ add_executable(ProjektGraC__ main.cpp
         Game/game.cpp
         Units/Units.cpp
         GameObjects/Rectangle/Rectangle.cpp
+        GameObjects/Player/Player.cpp
 
 
 

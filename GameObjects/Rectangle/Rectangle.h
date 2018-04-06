@@ -11,21 +11,22 @@
 #include "../GameObject.h"
 
 
-
-class Rectangle:public GameObject {
+class Rectangle : public GameObject {
 public:
-    b2World* World = nullptr;
+    b2World *World = nullptr;
     sf::Texture Texture;
     int width;
     int height;
     b2Body *body;
 public:
-    Rectangle(const sf::Texture &texture,int width,
-              int height,float x,float y,
-              b2World * World = nullptr,
-                b2BodyType bodyType = b2_staticBody);
+    Rectangle(const sf::Texture &texture, int width,
+              int height, float x, float y,
+              b2World *World = nullptr,
+              b2BodyType bodyType = b2_staticBody);
 
     virtual void Rendering(Game *game) override;
+
+    virtual void Kill() override;
 
 
 };
