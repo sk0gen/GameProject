@@ -10,6 +10,7 @@ add_executable(ProjektGraC__ main.cpp
         Units/Units.cpp
         GameObjects/Rectangle/Rectangle.cpp
         GameObjects/Player/Player.cpp
+        GameObjects/Bullet/Bullet.cpp
 
 
 
@@ -61,7 +62,7 @@ add_executable(ProjektGraC__ main.cpp
         Box2D/Dynamics/Joints/b2WheelJoint.cpp
         Box2D/Rope/b2Rope.cpp
 
-        )
+        GameObjects/Bullet/Bullet.cpp GameObjects/Bullet/Bullet.h GameObjects/Monster/Monster.cpp GameObjects/Monster/Monster.h)
 target_link_libraries(ProjektGraC__
         libsfml-audio-d.a
         libsfml-graphics-d.a

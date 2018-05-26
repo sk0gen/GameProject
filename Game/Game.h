@@ -14,10 +14,12 @@
 #include <memory>
 #include "GameObjects/Rectangle/Rectangle.h"
 #include "GameObjects/Player/Player.h"
+#include "GameObjects/Bullet/Bullet.h"
 
 class Rectangle;
-
 class Player;
+class Bullet;
+
 
 class Game {
 public:
@@ -35,6 +37,7 @@ public:
     sf::Texture Background;
     sf::Music Music;
     std::vector<Rectangle> Rectangles;
+    std::vector<Bullet> Bullets;
     Player *player;
 
 private:
@@ -42,7 +45,7 @@ private:
 
     void update();
 
-    void render(std::vector<Rectangle> &Rectangles);
+    void render(std::vector<Rectangle> &Rectangles,std::vector<Bullet> &Bullets);
 
     void LoadBackground(const std::string &Filename);
 

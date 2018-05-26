@@ -13,6 +13,8 @@ int main() {
     THEGAME->LoadTexture("../IMG/Player.png");
     THEGAME->LoadTexture("../IMG/Box.png");
     THEGAME->LoadTexture("../IMG/ground.png");
+    THEGAME->LoadTexture("../IMG/Bullet.png");
+
 
     THEGAME->run();
     delete THEGAME;

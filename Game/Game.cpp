@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "Units/Units.h"
 #include <iostream>
 #include <algorithm>
 
@@ -25,16 +26,23 @@ void Game::run() {
     Music.setVolume(0.4f);
     Music.play();
 
-    auto Ground = Rectangle(textures[2], 3200, 25, 50, 875, world, b2_staticBody);
+    auto Ground = Rectangle(textures[2], 4000, 25, 50, 875, world, b2_staticBody);
     Rectangles.push_back(Ground);
+    auto Wall1 =Rectangle(textures[2], 5, 2000, -100, 00, world, b2_staticBody);
+    Rectangles.push_back(Wall1);
+    auto Wall2= Rectangle(textures[2], 5,2000 , 1700, 00, world, b2_staticBody);
+    Rectangles.push_back(Wall2);
+    auto Wall3= Rectangle(textures[2], 4000,5 , 00, 00, world, b2_staticBody);
+    Rectangles.push_back(Wall2);
 
-    auto player = new Player(textures[0], 50, 50, 50, 700, world, b2_dynamicBody);
+    auto player = new Player(textures[0], 50, 50, 800, 700, world, b2_dynamicBody);
     this->setPlayer(player);
+
 
     while (window.isOpen()) {
         processEvents();
         update();
-        render(Rectangles);
+        render(Rectangles,Bullets);
     }
 }
 
@@ -49,13 +57,52 @@ void Game::processEvents() {
             case sf::Event::KeyPressed: {
                 switch (event.key.code) {
                     case sf::Keyboard::Right: {
-                        player->body->SetLinearVelocity(b2Vec2(3.f, 0.f));
+                        player->body->SetLinearVelocity(b2Vec2(4.f, player->body->GetLinearVelocity().y));
                         break;
                     }case sf::Keyboard::Left: {
-                        player->body->SetLinearVelocity(b2Vec2(-3.f, 0.f));
+                        player->body->SetLinearVelocity(b2Vec2(-4.f, player->body->GetLinearVelocity().y));
+
                         break;
                     }case sf::Keyboard::Up: {
-                        player->body->SetLinearVelocity(b2Vec2(player->body->GetLinearVelocity().x, -2.f));
+                        player->body->SetLinearVelocity(b2Vec2(player->body->GetLinearVelocity().x, -4.f));
+                        break;
+                    }
+                    case sf::Keyboard::X :{
+                        if(sf::Mouse::getPosition(window).x>=  Units::MetersToPixels(player->body->GetPosition().x)){
+                            auto bullet = Bullet(textures[3],8,player->x+15,player->y-20,world,b2_dynamicBody);
+
+                            bullet.body->ApplyLinearImpulseToCenter(b2Vec2(Units::PixelsToMeters(sf::Mouse::getPosition(window).x+15-Units::MetersToPixels(player->body->GetPosition().x)),
+                                                                           (Units::PixelsToMeters(sf::Mouse::getPosition(window).y-20-Units::MetersToPixels(player->body->GetPosition().y)))),true);
+                            Bullets.push_back(bullet);
+                        }else{
+                            auto bullet = Bullet(textures[3],8,player->x-15,player->y-20,world,b2_dynamicBody);
+                            bullet.body->ApplyLinearImpulseToCenter(b2Vec2(Units::PixelsToMeters(-15+sf::Mouse::getPosition(window).x-Units::MetersToPixels(player->body->GetPosition().x)),
+                                                                           (Units::PixelsToMeters(-20+sf::Mouse::getPosition(window).y-Units::MetersToPixels(player->body->GetPosition().y)))),true);
+                            Bullets.push_back(bullet);
+
+
+
+                        }
+
+                        std::cout << "X myszki " << sf::Mouse::getPosition(window).x << "        X gracza " << Units::MetersToPixels(player->body->GetPosition().x) << "Kwadrat" <<Rectangles.at(4).x << std::endl;
+
+
+
+                        break;
+                    }
+                    case sf::Keyboard::Y : {
+                        for(auto x:Bullets){
+                            x.Kill();
+
+                        }
+                        Bullets.clear();
+                        break;
+                    }
+                    case sf::Keyboard::T : {
+                        for(auto x:Rectangles){
+                            x.Kill();
+                        }
+                        Rectangles.clear();
                         break;
                     }
                 }
@@ -64,13 +111,17 @@ void Game::processEvents() {
                 switch (event.key.code) {
                     case sf::Mouse::Left: {
                         auto Rect = Rectangle(textures[1], 32, 32, sf::Mouse::getPosition(window).x,
-                                              sf::Mouse::getPosition(window).y, world, b2_dynamicBody);
+                                              sf::Mouse::getPosition(window).y, world, b2_staticBody);
                         Rectangles.push_back(Rect);
+
                         break;
                     }
                     case sf::Mouse::Right: {
                         /*Rectangles[1].body->SetLinearVelocity(b2Vec2(1.f,-2.f));*/
-                        Rectangles[1].body->ApplyForceToCenter(b2Vec2(0.f, -100.f), true);
+                        auto bullet = Bullet(textures[3],8,sf::Mouse::getPosition(window).x,
+                                             sf::Mouse::getPosition(window).y,world,b2_dynamicBody);
+
+                        Bullets.push_back(bullet);
                         break;
                     }
                         break;
@@ -86,8 +137,8 @@ void Game::processEvents() {
 void Game::update() {
 }
 
-void Game::render(std::vector<Rectangle> &Rectangles) {
-    std::cout << sf::Mouse::getPosition(window).y << std::endl;
+void Game::render(std::vector<Rectangle> &Rectangles,std::vector<Bullet> &Bullets) {
+
     window.clear(sf::Color::White);
     world->Step(1 / 60.f, 8, 3);
 
@@ -98,7 +149,13 @@ void Game::render(std::vector<Rectangle> &Rectangles) {
     for (auto &x : Rectangles) {
         x.Rendering(this);
     }
-    player->Rendering(this);
+    for (auto &x : Bullets) {
+        x.Rendering(this);
+
+    }
+    if(player->body!=nullptr) {
+        player->Rendering(this);
+    }
 
 //End the current frame
     window.display();

@@ -11,8 +11,8 @@ class Game;
 
 class GameObject {
 public:
-    int x;
-    int y;
+    float x;
+    float y;
 
     virtual void Rendering(Game *game)=0;
 
