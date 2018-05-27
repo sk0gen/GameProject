@@ -15,10 +15,12 @@
 #include "GameObjects/Rectangle/Rectangle.h"
 #include "GameObjects/Player/Player.h"
 #include "GameObjects/Bullet/Bullet.h"
+#include "GameObjects/Monster/Monster.h"
 
 class Rectangle;
 class Player;
 class Bullet;
+class Monster;
 
 
 class Game {
@@ -30,7 +32,7 @@ public:
     void run();
 
     void LoadTexture(std::string Filename);
-
+    int SpawnCounter = 0;
     sf::RenderWindow window;
     std::vector<sf::Texture> textures;
     b2World *world;
@@ -38,6 +40,7 @@ public:
     sf::Music Music;
     std::vector<Rectangle> Rectangles;
     std::vector<Bullet> Bullets;
+    std::vector<Monster> Monsters;
     Player *player;
 
 private:
@@ -45,7 +48,7 @@ private:
 
     void update();
 
-    void render(std::vector<Rectangle> &Rectangles,std::vector<Bullet> &Bullets);
+    void render();
 
     void LoadBackground(const std::string &Filename);
 
