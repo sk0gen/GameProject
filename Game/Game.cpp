@@ -73,20 +73,22 @@ void Game::processEvents() {
                     case sf::Keyboard::X : {
 
                         auto bullet = Bullet(textures[3], 8, player->x, player->y - 20, world, b2_dynamicBody);
-                        double lenght =0; //NORMALIZACJA WEKTORA w.x/|w|;;; w.y/|w|
+                        double lenght = 0; //NORMALIZACJA WEKTORA w.x/|w|;;; w.y/|w|
                         lenght = sqrt(pow(Units::PixelsToMeters(
                                 sf::Mouse::getPosition(window).x -
-                                Units::MetersToPixels(player->body->GetPosition().x)),2)+pow((Units::PixelsToMeters(
-                                sf::Mouse::getPosition(window).y - 40 - Units::MetersToPixels(player->body->GetPosition().y))),2));
+                                Units::MetersToPixels(player->body->GetPosition().x)), 2) + pow((Units::PixelsToMeters(
+                                sf::Mouse::getPosition(window).y - 40 -
+                                Units::MetersToPixels(player->body->GetPosition().y))), 2));
 
 
                         bullet.body->ApplyLinearImpulseToCenter(b2Vec2(Units::PixelsToMeters(
                                 sf::Mouse::getPosition(window).x -
-                                Units::MetersToPixels(player->body->GetPosition().x))*1.7/lenght,
+                                Units::MetersToPixels(player->body->GetPosition().x)) * 1.7 / lenght,
                                                                        (Units::PixelsToMeters(
                                                                                sf::Mouse::getPosition(window).y - 40 -
                                                                                Units::MetersToPixels(
-                                                                                       player->body->GetPosition().y)))*1.7/lenght),
+                                                                                       player->body->GetPosition().y))) *
+                                                                       1.7 / lenght),
                                                                 true);
                         Bullets.push_back(bullet);
                         break;
@@ -137,8 +139,14 @@ void Game::processEvents() {
 
 void Game::update() {
     SpawnCounter++;
-    if(SpawnCounter == 300){
+    if (SpawnCounter == 300) {
+        Monster monster = Monster(textures[4], 50, 50, -50, 750, world, b2_dynamicBody);
+        monster.body->SetLinearVelocity(b2Vec2(2.f, 0.f));
+        Monsters.push_back(monster);
+    }
 
+    for (auto m:Monsters) {
+        m.body->SetLinearVelocity(m.body->GetLinearVelocity());
     }
 }
 
@@ -157,6 +165,9 @@ void Game::render() {
     for (auto &x : Bullets) {
         x.Rendering(this);
 
+    }
+    for (auto &x: Monsters) {
+        x.Rendering(this);
     }
     if (player->body != nullptr) {
         player->Rendering(this);

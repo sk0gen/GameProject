@@ -1,11 +1,6 @@
-//
-// Created by gawin on 26/05/2018.
-//
 
 #include "Monster.h"
-//
-// Created by sk0gen on 27/03/2018.
-//
+
 
 #include "Units/Units.h"
 

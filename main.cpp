@@ -14,6 +14,7 @@ int main() {
     THEGAME->LoadTexture("../IMG/Box.png");
     THEGAME->LoadTexture("../IMG/ground.png");
     THEGAME->LoadTexture("../IMG/Bullet.png");
+    THEGAME->LoadTexture("../img/Monster.png");
 
 
     THEGAME->run();
