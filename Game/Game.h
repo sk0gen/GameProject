@@ -16,6 +16,8 @@
 #include "GameObjects/Player/Player.h"
 #include "GameObjects/Bullet/Bullet.h"
 #include "GameObjects/Monster/Monster.h"
+#include <random>
+#include <time.h>
 
 class Rectangle;
 class Player;
@@ -33,6 +35,7 @@ public:
 
     void LoadTexture(std::string Filename);
     int SpawnCounter = 0;
+    int ShootingSpeed = 0;
     sf::RenderWindow window;
     std::vector<sf::Texture> textures;
     b2World *world;
@@ -51,6 +54,8 @@ private:
     void render();
 
     void LoadBackground(const std::string &Filename);
+
+    int randomInt();
 
 public:
     void setPlayer(Player *player) {
