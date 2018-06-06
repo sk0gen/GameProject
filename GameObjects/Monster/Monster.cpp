@@ -19,6 +19,8 @@ Monster::Monster(const sf::Texture &texture, int width,
     bodyDef.type =bodyType;
     this->World = World;
     body = this->World->CreateBody(&bodyDef);
+    std::string * kappa = new std::string("monster");
+    body->SetUserData(kappa);
     b2PolygonShape Shape;
     Shape.SetAsBox((Units::PixelsToMeters(width-1)/2.f),
                    (Units::PixelsToMeters(height-1)/2.f));

@@ -16,16 +16,23 @@
 #include "GameObjects/Player/Player.h"
 #include "GameObjects/Bullet/Bullet.h"
 #include "GameObjects/Monster/Monster.h"
+#include "Listener/myListener.h"
+
 #include <random>
 #include <time.h>
 
 class Rectangle;
+
 class Player;
+
 class Bullet;
+
 class Monster;
 
-
 class Game {
+
+
+
 public:
     Game(float gravity_ = 8.f);
 
@@ -34,8 +41,11 @@ public:
     void run();
 
     void LoadTexture(std::string Filename);
+
     int SpawnCounter = 0;
     int ShootingSpeed = 0;
+    int Points = 0;
+    myListener listener;
     sf::RenderWindow window;
     std::vector<sf::Texture> textures;
     b2World *world;
@@ -45,6 +55,8 @@ public:
     std::vector<Bullet> Bullets;
     std::vector<Monster> Monsters;
     Player *player;
+    sf::Font font;
+    sf::Text text;
 
 private:
     void processEvents();
@@ -57,12 +69,31 @@ private:
 
     int randomInt();
 
+
+
 public:
     void setPlayer(Player *player) {
         Game::player = player;
     }
 
 };
+
+/*class myListener : public b2ContactListener, public Game {
+    void BeginContact(b2Contact *contact) {
+        auto one = contact->GetFixtureA()->GetBody();
+        auto two = contact->GetFixtureB()->GetBody();
+        std::string *string1 = (std::string *) one->GetUserData();
+        std::string *string2 = (std::string *) two->GetUserData();
+        if ((*string1 == "bullet") && (*string2 == "monster")) {
+            deleteBullet(one);
+            deleteMonster(two);
+        }
+        if ((*string1 == "monster") && (*string2 == "bullet")) {
+            deleteBullet(two);
+            deleteMonster(one);
+        }
+    }
+};*/
 
 
 #endif //PROJEKTGRAC_GAME_H

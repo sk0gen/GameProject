@@ -28,7 +28,7 @@ Player::Player(const sf::Texture &texture, int width,
                    (Units::PixelsToMeters(height - 1) / 2.f));
     b2FixtureDef fixtureDef;
     fixtureDef.density = 1.f;
-    fixtureDef.friction = 0.20f;
+    fixtureDef.friction = 0.69f;
     fixtureDef.shape = &Shape;
     body->CreateFixture(&fixtureDef);
 }

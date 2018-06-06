@@ -11,6 +11,7 @@ add_executable(ProjektGraC__ main.cpp
         GameObjects/Rectangle/Rectangle.cpp
         GameObjects/Player/Player.cpp
         GameObjects/Bullet/Bullet.cpp
+        Listener/myListener.cpp
 
 
 

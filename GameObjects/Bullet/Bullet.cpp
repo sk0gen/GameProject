@@ -20,6 +20,8 @@ Bullet::Bullet(const sf::Texture &texture, int r, float x, float y,
    bodyDef.bullet = true;
     this->World = World;
     body = this->World->CreateBody(&bodyDef);
+    std::string * kappa = new std::string("bullet");
+    body->SetUserData(kappa);
     b2CircleShape circle;
     circle.m_radius = Units::PixelsToMeters(r);
     circle.m_p.Set((Units::PixelsToMeters(r)) / 2.f, Units::PixelsToMeters(r) / 2.f);
