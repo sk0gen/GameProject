@@ -15,7 +15,7 @@ Game::Game(float gravity_) : window(sf::VideoMode(1600, 900, 32), "SomeGame") {
     font.loadFromFile("../Font/prstart.ttf");
     text.setFont(font);
     text.setString(std::to_string(Points));
-    text.setPosition((window.getSize().x/2)-100,25);
+    text.setPosition((window.getSize().x / 2) - 100, 25);
     text.setCharacterSize(100);
     text.setFillColor(sf::Color::Black);
 
@@ -52,10 +52,14 @@ void Game::run() {
     world->SetContactListener(&listener);
 
     while (window.isOpen()) {
-        processEvents();
-        update();
-        render();
+
+            processEvents();
+        if (GamePlay) {
+            update();
+            render();
+        }
     }
+
 }
 
 void Game::processEvents() {
@@ -66,8 +70,14 @@ void Game::processEvents() {
                 window.close();
                 break;
             }
-
-
+            case sf::Event::LostFocus: {
+                this->Pause();
+                break;
+            }
+            case sf::Event::GainedFocus :{
+                this->UnPause();
+                break;
+            }
             case sf::Event::KeyPressed: {
                 switch (event.key.code) {
                     case sf::Keyboard::Right: {
@@ -80,23 +90,23 @@ void Game::processEvents() {
                         break;
                     }
 
-                    /*case sf::Keyboard::Up: {
-                        Points++;
-                        player->body->SetLinearVelocity(b2Vec2(player->body->GetLinearVelocity().x, -4.f));
-                        break;
-                    }
-                    case sf::Keyboard::X : {
-
-                    }
-
-                    case sf::Keyboard::Y : {
-                        for (auto x:Bullets) {
-                            x.Kill();
+                        /*case sf::Keyboard::Up: {
+                            Points++;
+                            player->body->SetLinearVelocity(b2Vec2(player->body->GetLinearVelocity().x, -4.f));
+                            break;
+                        }
+                        case sf::Keyboard::X : {
 
                         }
-                        Bullets.clear();
-                        break;
-                    }*/
+
+                        case sf::Keyboard::Y : {
+                            for (auto x:Bullets) {
+                                x.Kill();
+
+                            }
+                            Bullets.clear();
+                            break;
+                        }*/
                 }
             }
             case sf::Event::MouseButtonPressed: {
@@ -198,9 +208,9 @@ void Game::update() {
     }
     for (int i = 0; i < Bullets.size(); i++) {
         auto &m = Bullets[i];
-        if(m.body->GetUserData()) {
+        if (m.body->GetUserData()) {
             auto string1 = (std::string *) m.body->GetUserData();
-            if(*string1 == "delete") {
+            if (*string1 == "delete") {
                 Bullets[i].Kill();
                 Bullets.erase(Bullets.begin() + i);
             }
@@ -208,9 +218,9 @@ void Game::update() {
     }
     for (int i = 0; i < Monsters.size(); i++) {
         auto &m = Monsters[i];
-        if(m.body->GetUserData()) {
+        if (m.body->GetUserData()) {
             auto string1 = (std::string *) m.body->GetUserData();
-            if(*string1 == "delete") {
+            if (*string1 == "delete") {
                 Monsters[i].Kill();
                 Monsters.erase(Monsters.begin() + i);
                 Points++;
@@ -219,17 +229,18 @@ void Game::update() {
     }
     for (int i = 0; i < Monsters.size(); i++) {
         auto &m = Monsters[i];
-        if(m.body->GetUserData()) {
+        if (m.body->GetUserData()) {
             auto string1 = (std::string *) m.body->GetUserData();
-            if(*string1 == "deletee") {
+            if (*string1 == "deletee") {
                 Monsters[i].Kill();
                 Monsters.erase(Monsters.begin() + i);
             }
         }
     }
-if(Points>5){
-        text.setString("Wygrales, ale Jarek przegral");
-        text.getPosition(50,50)
+    if (Points >= 25) {
+        text.setString("KONIEC");
+        text.setPosition(100, 25);
+        text.setCharacterSize(50);
     }
 
 }
@@ -278,6 +289,14 @@ int Game::randomInt() {
     static std::default_random_engine generator(time(NULL));
     std::uniform_int_distribution<int> distribution(1, 6);
     return distribution(generator);
+}
+
+void Game::Pause() {
+    GamePlay = false;
+}
+
+void Game::UnPause() {
+    GamePlay=true;
 }
 
 

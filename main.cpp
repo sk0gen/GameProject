@@ -15,8 +15,6 @@ int main() {
     THEGAME->LoadTexture("../IMG/ground.png");
     THEGAME->LoadTexture("../IMG/Bullet.png");
     THEGAME->LoadTexture("../img/Monster.png");
-
-
     THEGAME->run();
     delete THEGAME;
     return 0;

@@ -57,7 +57,7 @@ public:
     Player *player;
     sf::Font font;
     sf::Text text;
-
+bool GamePlay = true;
 private:
     void processEvents();
 
@@ -68,6 +68,8 @@ private:
     void LoadBackground(const std::string &Filename);
 
     int randomInt();
+    void Pause();
+    void UnPause();
 
 
 
