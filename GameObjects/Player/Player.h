@@ -24,6 +24,8 @@ public:
               b2World * World = nullptr,
               b2BodyType bodyType = b2_dynamicBody);
 
+    void MoveLeft();
+    void MoveRight();
     virtual void Rendering(Game *game) override;
     virtual void Kill() override ;
 

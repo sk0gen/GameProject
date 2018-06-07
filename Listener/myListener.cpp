@@ -21,8 +21,8 @@ void myListener::BeginContact(b2Contact *contact) {
             *string2 = "delete";
         }
         if ((*string1 == "monster") && (*string2 == "monster")) {
-            *string1 = "deletee";
-            *string2 = "deletee";
+            *string1 = "deleteNoPoint";
+            *string2 = "deleteNoPoint";
         }
     }
 }

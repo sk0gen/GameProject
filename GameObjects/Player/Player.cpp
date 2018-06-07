@@ -49,3 +49,12 @@ void Player::Rendering(Game *game) {
 void Player::Kill() {
     body->GetWorld()->DestroyBody(body);
 }
+
+void Player::MoveLeft() {
+    this->body->SetLinearVelocity(b2Vec2(-4.f, this->body->GetLinearVelocity().y));
+
+}
+
+void Player::MoveRight() {
+    this->body->SetLinearVelocity(b2Vec2(4.f, this->body->GetLinearVelocity().y));
+}

@@ -43,7 +43,6 @@ void Bullet::Rendering(Game *game) {
     Sprite.setPosition(x, y);
     Sprite.setRotation(180 / b2_pi * body->GetAngle());
     game->window.draw(Sprite);
-
 }
 
 void Bullet::Kill() {

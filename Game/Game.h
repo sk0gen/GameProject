@@ -32,7 +32,6 @@ class Monster;
 class Game {
 
 
-
 public:
     Game(float gravity_ = 8.f);
 
@@ -57,8 +56,9 @@ public:
     Player *player;
     sf::Font font;
     sf::Text text;
-bool GamePlay = true;
+    bool GamePlay = true;
 private:
+    void SetGame();
     void processEvents();
 
     void update();
@@ -68,10 +68,22 @@ private:
     void LoadBackground(const std::string &Filename);
 
     int randomInt();
+
     void Pause();
+
     void UnPause();
 
+    void SpawnMonsterAndGiveSpeed();
 
+    void DeleteConflictingMonsters();
+
+    void DeleteConflictingBullets();
+
+    void TextUpdate();
+
+    void ShootingUpdate();
+
+    void PlayerShooting();
 
 public:
     void setPlayer(Player *player) {
